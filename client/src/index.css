@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans text-slate-800 bg-slate-50 antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display text-slate-900;
+  }
+}
+
+.hero-bg {
+    background-image: linear-gradient(rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.8)), url("./assets/hero.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseGlow {
+  0% {
+    transform: scale(1) translate(0px, 0px);
+    opacity: 0.15;
+  }
+  50% {
+    transform: scale(1.05) translate(10px, -10px);
+    opacity: 0.25;
+  }
+  100% {
+    transform: scale(1) translate(0px, 0px);
+    opacity: 0.15;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(1.5deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+.animate-float-slow {
+  animation: float 7s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes loaderBar {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-loader-bar {
+  animation: loaderBar 1.8s infinite ease-in-out;
+}
