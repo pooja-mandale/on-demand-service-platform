@@ -138,9 +138,8 @@ exports.isCancelRequestAgencyProfessional = asyncHandler(async (req, res) => {
 
 //for professional
 exports.getProfessionalBooking = asyncHandler(async (req, res) => {
-    // ithe agency Professional cha id nhii professional cha id ahe 
     try {
-        const result = await BookService.find({ agencyProfessionalId: req.user }).populate("customerId")
+        const result = await BookService.find({ professionalId: req.user }).populate("customerId")
         res.status(200).json({ message: 'Bookings fetched successfully.', result });
     } catch (error) {
         console.error('Error fetching bookings:', error);
@@ -150,7 +149,7 @@ exports.getProfessionalBooking = asyncHandler(async (req, res) => {
 //for agency professional
 exports.getAgencyProfessionalBooking = asyncHandler(async (req, res) => {
     try {
-        const result = await BookService.find({ professionalId: req.user }).populate("customerId")
+        const result = await BookService.find({ agencyProfessionalId: req.user }).populate("customerId")
         res.status(200).json({ message: 'Bookings fetched successfully.', result });
     } catch (error) {
         console.error('Error fetching bookings:', error);

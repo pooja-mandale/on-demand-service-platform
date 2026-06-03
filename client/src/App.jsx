@@ -33,7 +33,7 @@ const AdminProfile = lazy(() => import('./components/admin/AdminProfile'))
 const AgencyPage = lazy(() => import('./components/admin/AgencyPage'))
 const NormalProfessionalAllBookings = lazy(() => import('./components/admin/ProfessionalBooking'))
 
-const AgencyNavbar = lazy(() => import('./components/agency/AgencyNav'))
+const AgencyLayout = lazy(() => import('./components/agency/AgencyLayout'))
 const AgencyDashboard = lazy(() => import('./components/agency/AgencyDashboard'))
 const AgencyRegister = lazy(() => import('./components/agency/AgencyRegister'))
 const AgencyProfile = lazy(() => import('./components/agency/AgencyProfile'))
@@ -42,7 +42,7 @@ const AddAgencyProfessional = lazy(() => import('./components/agency/Add_agencyP
 const AllAgencyProfessionals = lazy(() => import('./components/agency/AllAgencyProfessionals'))
 const AgencyProfessionalBooking = lazy(() => import('./components/agency/AllBookingsAgencyPro'))
 
-const ProfessionalNavbar = lazy(() => import('./components/proffesional/ProfessionalNavbar '))
+const ProfessionalLayout = lazy(() => import('./components/proffesional/ProfessionalLayout'))
 const ProfessionalDashboard = lazy(() => import('./components/proffesional/ProfessionalDashboard'))
 const ProfessionalProfile = lazy(() => import('./components/proffesional/ProfessionalProfile'))
 const ProfessionalRegister = lazy(() => import('./components/proffesional/ProfessionalRegister '))
@@ -122,8 +122,7 @@ const App = () => {
             element={
               <ErrorBoundary FallbackComponent={ErrorFallback}>
                 <Suspense fallback={<Loader />}>
-                  <AgencyNavbar />
-                  <Outlet />
+                  <AgencyLayout />
                 </Suspense>
               </ErrorBoundary>
             }
@@ -143,8 +142,7 @@ const App = () => {
             element={
               <ErrorBoundary FallbackComponent={ErrorFallback}>
                 <Suspense fallback={<Loader />}>
-                  <ProfessionalNavbar />
-                  <Outlet />
+                  <ProfessionalLayout />
                 </Suspense>
               </ErrorBoundary>
             }

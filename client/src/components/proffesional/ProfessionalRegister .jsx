@@ -287,7 +287,7 @@ const ProfessionalRegister = () => {
                                         accept="image/*"
                                         required
                                     />
-                                    <p className="mt-1 text-2xs text-slate-400 font-medium">JPEG, PNG, or WebP. Max 5MB.</p>
+                                    <p className="mt-1 text-[10px] text-slate-400 font-medium">JPEG, PNG, or WebP. Max 5MB.</p>
                                 </div>
                             </div>
                         </div>
