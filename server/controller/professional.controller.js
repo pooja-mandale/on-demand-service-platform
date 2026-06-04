@@ -82,8 +82,8 @@ exports.loginProfessional = asyncHandler(async (req, res) => {
 
 exports.logOutProfessional = asyncHandler(async (req, res) => {
     try {
-        const { Professional } = req.body
-        res.clearCookie("Professional")
+        const { Professional } = req.body || {}
+        res.clearCookie("professional")
         res.json({ message: "Professional LogOut Success", result: Professional })
 
     } catch (error) {

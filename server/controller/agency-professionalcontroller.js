@@ -87,7 +87,7 @@ exports.loginAgency_Professional = asyncHandler(async (req, res) => {
 
 exports.logOutAgency_Professional = asyncHandler(async (req, res) => {
     try {
-        const { agency_professional } = req.body
+        const { agency_professional } = req.body || {}
         res.clearCookie("agency_professional")
         res.json({ message: "agency_professional LogOut Success", result: agency_professional })
     } catch (error) {

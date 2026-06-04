@@ -3,7 +3,22 @@ const mongoose = require("mongoose")
 const cookieParser = require("cookie-parser")
 const cors = require("cors")
 const path = require("path")
+const fs = require("fs")
 require("dotenv").config()
+
+// Intercept console.error to log to error.log
+const originalConsoleError = console.error;
+console.error = function (...args) {
+    originalConsoleError.apply(console, args);
+    const logMessage = args.map(arg => 
+        arg instanceof Error ? arg.stack : (typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg))
+    ).join(" ");
+    try {
+        fs.appendFileSync(path.join(__dirname, "error.log"), `[${new Date().toISOString()}] ${logMessage}\n\n`);
+    } catch (e) {
+        originalConsoleError("Failed to write to error.log", e);
+    }
+};
 
 const app = express()
 
@@ -51,7 +66,7 @@ mongoose.connect(process.env.MONGO_URL)
     .catch(err => console.error("Initial MongoDB connection error:", err));
 
 // Fallback for local development testing
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== "production" || !process.env.VERCEL) {
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => console.log(`SERVER RUNNING ON PORT ${PORT} 🏃‍♂️`))
 }

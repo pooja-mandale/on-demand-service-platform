@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const agency_professionalApi = createApi({
     reducerPath: "agency_professionalApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "/api/agency-professional", credentials: "include" }),
+    baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.VITE_BACKEND_URL || ""}/api/agency-professional`, credentials: "include" }),
     tagTypes: ["agency_professionalApi"],
     endpoints: (builder) => {
         return {

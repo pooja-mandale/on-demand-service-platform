@@ -84,7 +84,7 @@ exports.loginAgency = asyncHandler(async (req, res) => {
 })
 exports.logOutAgency = asyncHandler(async (req, res) => {
     try {
-        const { agency } = req.body
+        const { agency } = req.body || {}
         res.clearCookie("agency")
         res.json({ message: "Admin LogOut Success", result: agency })
     } catch (error) {
@@ -167,10 +167,10 @@ exports.updateAgencyProfile = async (req, res) => {
         const { id } = req.params
         const { name, email, phone, address, description } = req.body
 
-        if (!name && !email && !password) {
-            return res.status(400).json({ message: 'At least one field (name, email, password) must be provided.' });
+        if (!name && !email && !phone && !address && !description) {
+            return res.status(400).json({ message: 'At least one field must be provided.' });
         }
-        const result = await Customer.findByIdAndUpdate(id, req.body)
+        const result = await Agency.findByIdAndUpdate(id, req.body, { new: true })
 
         if (!result) {
             return res.status(404).json({ message: 'Agency not found' });
@@ -178,7 +178,7 @@ exports.updateAgencyProfile = async (req, res) => {
         return res.status(200).json({ message: 'Profile updated successfully', result });
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Server error', error });
+        return res.status(500).json({ message: 'Server error', error: error.message });
     }
 }
 

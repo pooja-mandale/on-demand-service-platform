@@ -70,7 +70,7 @@ exports.loginAdmin = asyncHandler(async (req, res) => {
 })
 exports.logOutAdmin = asyncHandler(async (req, res) => {
     try {
-        const { admin } = req.body
+        const { admin } = req.body || {}
         res.clearCookie("admin")
         res.json({ message: "Admin LogOut Success", result: admin })
     } catch (error) {

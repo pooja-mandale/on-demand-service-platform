@@ -73,7 +73,7 @@ exports.loginCustomer = asyncHandler(async (req, res) => {
 })
 exports.logOutCustomer = asyncHandler(async (req, res) => {
     try {
-        const { customer } = req.body
+        const { customer } = req.body || {}
         res.clearCookie("customer")
         res.json({ message: "Customer LogOut Success", result: customer })
     } catch (error) {
