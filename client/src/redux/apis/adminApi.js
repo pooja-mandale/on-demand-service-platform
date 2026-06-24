@@ -2,7 +2,17 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const AdminApi = createApi({
     reducerPath: "AdminApi",
-    baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.VITE_BACKEND_URL || ""}/api/admin`, credentials: "include" }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: `${import.meta.env.VITE_BACKEND_URL || ""}/api/admin`,
+        credentials: "include",
+        prepareHeaders: (headers) => {
+            const admin = JSON.parse(localStorage.getItem("admin") || "{}");
+            if (admin && admin.token) {
+                headers.set("authorization", `Bearer ${admin.token}`);
+            }
+            return headers;
+        }
+    }),
     tagTypes: ["adminApi"],
     endpoints: (builder) => {
         return {

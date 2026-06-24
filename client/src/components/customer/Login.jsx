@@ -40,6 +40,13 @@ const Login = () => {
         }
     }, [isSuccess, navigate]);
 
+    useEffect(() => {
+        if (isError) {
+            const message = error?.data?.message || error?.message || "Invalid credentials. Please try again.";
+            toast.error(message);
+        }
+    }, [isError, error]);
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-slate-100/50 p-4">
             <div className="w-full max-w-[400px] bg-white p-8 rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-100 animate-in fade-in slide-in-from-bottom-4 duration-700">

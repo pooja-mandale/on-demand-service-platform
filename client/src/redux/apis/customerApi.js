@@ -2,7 +2,17 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const customerApi = createApi({
     reducerPath: "customerApi",
-    baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.VITE_BACKEND_URL || ""}/api/customer`, credentials: "include" }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: `${import.meta.env.VITE_BACKEND_URL || ""}/api/customer`,
+        credentials: "include",
+        prepareHeaders: (headers) => {
+            const customer = JSON.parse(localStorage.getItem("customer") || "{}");
+            if (customer && customer.token) {
+                headers.set("authorization", `Bearer ${customer.token}`);
+            }
+            return headers;
+        }
+    }),
     tagTypes: ["customerApi"],
     endpoints: (builder) => {
         return {
@@ -128,8 +138,10 @@ export const customerApi = createApi({
                     }
                 },
                 transformResponse: data => {
-                    localStorage.setItem("customer", JSON.stringify(data.result))
-                    return data.result
+                    const localData = JSON.parse(localStorage.getItem("customer") || "{}");
+                    const updatedResult = { ...data.result, token: localData.token };
+                    localStorage.setItem("customer", JSON.stringify(updatedResult));
+                    return updatedResult;
                 },
                 invalidatesTags: ["customerApi"]
             }),

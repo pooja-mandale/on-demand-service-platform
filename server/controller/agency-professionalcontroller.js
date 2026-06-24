@@ -75,7 +75,7 @@ exports.loginAgency_Professional = asyncHandler(async (req, res) => {
                 _id: result._id,
                 name: result.name,
                 email: result.email,
-
+                token: agency_Professional
             }
         })
 

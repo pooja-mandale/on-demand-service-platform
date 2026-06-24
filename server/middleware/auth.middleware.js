@@ -1,11 +1,12 @@
 const jwt = require("jsonwebtoken")
 
 exports.adminProtected = (req, res, next) => {
-    const admin = req.cookies.admin
+    const authHeader = req.headers.authorization
+    const admin = (authHeader && authHeader.startsWith("Bearer ")) ? authHeader.split(" ")[1] : req.cookies.admin
     console.log(req.cookies)
 
     if (!admin) {
-        return res.status(401).json({ message: "No Cookie Found" })
+        return res.status(401).json({ message: "No Cookie or Token Found" })
     }
     jwt.verify(admin, process.env.JWT_KEY, (error, decode) => {
         if (error) {
@@ -17,12 +18,13 @@ exports.adminProtected = (req, res, next) => {
     })
 }
 exports.customerProtected = (req, res, next) => {
-    const { customer } = req.cookies;
+    const authHeader = req.headers.authorization;
+    const customer = (authHeader && authHeader.startsWith("Bearer ")) ? authHeader.split(" ")[1] : req.cookies.customer;
 
     console.log(req.cookies); // Log cookies for debugging
 
     if (!customer) {
-        return res.status(401).json({ message: "No cookie found" });
+        return res.status(401).json({ message: "No cookie or token found" });
     }
 
     jwt.verify(customer, process.env.JWT_KEY, (error, decode) => {
@@ -39,11 +41,12 @@ exports.customerProtected = (req, res, next) => {
 };
 
 exports.professionalProtected = (req, res, next) => {
-    const { professional } = req.cookies
+    const authHeader = req.headers.authorization
+    const professional = (authHeader && authHeader.startsWith("Bearer ")) ? authHeader.split(" ")[1] : req.cookies.professional
     console.log(req.cookies)
 
     if (!professional) {
-        return res.status(401).json({ message: "No Cookie Found" })
+        return res.status(401).json({ message: "No Cookie or Token Found" })
     }
     jwt.verify(professional, process.env.JWT_KEY, (error, decode) => {
         if (error) {
@@ -55,11 +58,12 @@ exports.professionalProtected = (req, res, next) => {
     })
 }
 exports.agencyProtected = (req, res, next) => {
-    const { agency } = req.cookies
+    const authHeader = req.headers.authorization
+    const agency = (authHeader && authHeader.startsWith("Bearer ")) ? authHeader.split(" ")[1] : req.cookies.agency
     console.log(req.cookies)
 
     if (!agency) {
-        return res.status(401).json({ message: "No Cookie Found" })
+        return res.status(401).json({ message: "No Cookie or Token Found" })
     }
     jwt.verify(agency, process.env.JWT_KEY, (error, decode) => {
         if (error) {
@@ -71,11 +75,12 @@ exports.agencyProtected = (req, res, next) => {
     })
 }
 exports.agencyProfessionalProtected = (req, res, next) => {
-    const { agency_professional } = req.cookies
+    const authHeader = req.headers.authorization
+    const agency_professional = (authHeader && authHeader.startsWith("Bearer ")) ? authHeader.split(" ")[1] : req.cookies.agency_professional
     console.log(req.cookies)
 
     if (!agency_professional) {
-        return res.status(401).json({ message: "No Cookie Found" })
+        return res.status(401).json({ message: "No Cookie or Token Found" })
     }
     jwt.verify(agency_professional, process.env.JWT_KEY, (error, decode) => {
         if (error) {

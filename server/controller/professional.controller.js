@@ -71,7 +71,8 @@ exports.loginProfessional = asyncHandler(async (req, res) => {
         res.json({
             message: "professional login success", result: {
                 _id: result._id,
-                name: result.name
+                name: result.name,
+                token: professional
             }
         })
     } catch (error) {

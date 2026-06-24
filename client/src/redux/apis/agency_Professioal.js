@@ -2,7 +2,17 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const agency_professionalApi = createApi({
     reducerPath: "agency_professionalApi",
-    baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.VITE_BACKEND_URL || ""}/api/agency-professional`, credentials: "include" }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: `${import.meta.env.VITE_BACKEND_URL || ""}/api/agency-professional`,
+        credentials: "include",
+        prepareHeaders: (headers) => {
+            const agency_professional = JSON.parse(localStorage.getItem("agency_professional") || "{}");
+            if (agency_professional && agency_professional.token) {
+                headers.set("authorization", `Bearer ${agency_professional.token}`);
+            }
+            return headers;
+        }
+    }),
     tagTypes: ["agency_professionalApi"],
     endpoints: (builder) => {
         return {

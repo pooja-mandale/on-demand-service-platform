@@ -61,6 +61,7 @@ exports.loginAdmin = asyncHandler(async (req, res) => {
                 _id: result._id,
                 name: result.name,
                 email: result.email,
+                token: admin
             }
         })
     } catch (error) {

@@ -74,7 +74,7 @@ exports.loginAgency = asyncHandler(async (req, res) => {
                 phone: result.phone,
                 address: result.address,
                 description: result.description,
-
+                token: agency
             }
         })
     } catch (error) {
