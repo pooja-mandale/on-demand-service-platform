@@ -46,7 +46,10 @@ const connectDB = async () => {
     // Reset flag in case previous connection was lost
     isConnected = false;
     try {
-        const conn = await mongoose.connect(process.env.MONGO_URL, {
+        const mongoUri = process.env.MONGO_URL 
+            || "mongodb+srv://olx-user:hRwJZKPhgqQyKN5O@cluster0.yjpqbyl.mongodb.net/on-demand-service";
+
+        const conn = await mongoose.connect(mongoUri, {
             serverSelectionTimeoutMS: 5000,
             socketTimeoutMS: 45000,
             maxPoolSize: 10,

@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+import { getBaseUrl } from "../baseUrl"
 
 export const customerApi = createApi({
     reducerPath: "customerApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: `${import.meta.env.VITE_BACKEND_URL || ""}/api/customer`,
+        baseUrl: `${getBaseUrl()}/api/customer`,
         credentials: "include",
         prepareHeaders: (headers) => {
             const customer = JSON.parse(localStorage.getItem("customer") || "{}");

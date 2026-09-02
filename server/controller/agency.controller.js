@@ -1,5 +1,6 @@
 const validator = require("validator")
 const { checkEmpty } = require("../utils/checkEmpty")
+const getCookieOptions = require("../utils/cookieOptions")
 const asyncHandler = require("express-async-handler")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
@@ -64,7 +65,7 @@ exports.loginAgency = asyncHandler(async (req, res) => {
             return res.status(401).json({ message: "password do not match" })
         }
         const agency = jwt.sign({ name: result.name, _id: result._id }, process.env.JWT_KEY, { expiresIn: "3650d" })
-        res.cookie("agency", agency, { httpOnly: true, secure: false, sameSite: "lax", maxAge: 3650 * 24 * 60 * 60 * 1000 })
+        res.cookie("agency", agency, getCookieOptions())
 
         res.json({
             message: "agency login success", result: {
@@ -85,7 +86,7 @@ exports.loginAgency = asyncHandler(async (req, res) => {
 exports.logOutAgency = asyncHandler(async (req, res) => {
     try {
         const { agency } = req.body || {}
-        res.clearCookie("agency")
+        res.clearCookie("agency", getCookieOptions())
         res.json({ message: "Admin LogOut Success", result: agency })
     } catch (error) {
         console.error("Error logOut agency:", error)

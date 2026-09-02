@@ -1,5 +1,6 @@
 const validator = require("validator")
 const { checkEmpty } = require("../utils/checkEmpty")
+const getCookieOptions = require("../utils/cookieOptions")
 const asyncHandler = require("express-async-handler")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
@@ -68,7 +69,7 @@ exports.loginAgency_Professional = asyncHandler(async (req, res) => {
             return res.status(401).json({ message: "Account Deactive By the Admin" })
         }
         const agency_Professional = jwt.sign({ name: result.name, _id: result._id }, process.env.JWT_KEY, { expiresIn: "3650d" })
-        res.cookie("agency_professional", agency_Professional, { httpOnly: true, secure: false, sameSite: "lax", maxAge: 3650 * 24 * 60 * 60 * 1000 })
+        res.cookie("agency_professional", agency_Professional, getCookieOptions())
 
         res.json({
             message: "agency_Professional login success", result: {
@@ -88,7 +89,7 @@ exports.loginAgency_Professional = asyncHandler(async (req, res) => {
 exports.logOutAgency_Professional = asyncHandler(async (req, res) => {
     try {
         const { agency_professional } = req.body || {}
-        res.clearCookie("agency_professional")
+        res.clearCookie("agency_professional", getCookieOptions())
         res.json({ message: "agency_professional LogOut Success", result: agency_professional })
     } catch (error) {
         console.error("Error logOut Professional:", error)

@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+import { getBaseUrl } from "../baseUrl"
 
 export const agency_professionalApi = createApi({
     reducerPath: "agency_professionalApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: `${import.meta.env.VITE_BACKEND_URL || ""}/api/agency-professional`,
+        baseUrl: `${getBaseUrl()}/api/agency-professional`,
         credentials: "include",
         prepareHeaders: (headers) => {
             const agency_professional = JSON.parse(localStorage.getItem("agency_professional") || "{}");

@@ -1,5 +1,6 @@
 const validator = require("validator")
 const { checkEmpty } = require("../utils/checkEmpty")
+const getCookieOptions = require("../utils/cookieOptions")
 const asyncHandler = require("express-async-handler")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
@@ -66,7 +67,7 @@ exports.loginProfessional = asyncHandler(async (req, res) => {
             return res.status(401).json({ message: "password do not match" })
         }
         const professional = jwt.sign({ name: result.name, _id: result._id }, process.env.JWT_KEY, { expiresIn: "3650d" })
-        res.cookie("professional", professional, { httpOnly: true, secure: false, sameSite: "lax", maxAge: 3650 * 24 * 60 * 60 * 1000 })
+        res.cookie("professional", professional, getCookieOptions())
 
         res.json({
             message: "professional login success", result: {
@@ -84,7 +85,7 @@ exports.loginProfessional = asyncHandler(async (req, res) => {
 exports.logOutProfessional = asyncHandler(async (req, res) => {
     try {
         const { Professional } = req.body || {}
-        res.clearCookie("professional")
+        res.clearCookie("professional", getCookieOptions())
         res.json({ message: "Professional LogOut Success", result: Professional })
 
     } catch (error) {

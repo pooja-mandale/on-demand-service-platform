@@ -1,6 +1,7 @@
 const Customer = require("../modal/Customer")
 const validator = require("validator")
 const { checkEmpty } = require("../utils/checkEmpty")
+const getCookieOptions = require("../utils/cookieOptions")
 const asyncHandler = require("express-async-handler")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
@@ -56,7 +57,7 @@ exports.loginCustomer = asyncHandler(async (req, res) => {
             return res.status(401).json({ message: "password do not match" })
         }
         const customer = jwt.sign({ name: result.name, _id: result._id, }, process.env.JWT_KEY, { expiresIn: "3650d" })
-        res.cookie("customer", customer, { httpOnly: true, secure: false, sameSite: "lax", maxAge: 3650 * 24 * 60 * 60 * 1000 })
+        res.cookie("customer", customer, getCookieOptions())
 
         res.json({
             message: "login success", result: {
@@ -75,7 +76,7 @@ exports.loginCustomer = asyncHandler(async (req, res) => {
 exports.logOutCustomer = asyncHandler(async (req, res) => {
     try {
         const { customer } = req.body || {}
-        res.clearCookie("customer")
+        res.clearCookie("customer", getCookieOptions())
         res.json({ message: "Customer LogOut Success", result: customer })
     } catch (error) {
         console.error("Error logOut customer:", error)
