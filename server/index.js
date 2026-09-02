@@ -25,11 +25,31 @@ console.error = function (...args) {
 const app = express()
 
 // Middleware
-// CORS configuration - use specific client URL in production for security
-const allowedOrigins = process.env.CLIENT_URL 
-    ? [process.env.CLIENT_URL, "http://localhost:5173"] 
-    : true;
-app.use(cors({ origin: allowedOrigins, credentials: true }))
+// CORS configuration - allow localhost and any .vercel.app frontend domain
+const allowedOrigins = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "https://on-demand-service-platform-client.vercel.app",
+    "https://on-demand-service-platform-nine.vercel.app"
+];
+if (process.env.CLIENT_URL) {
+    allowedOrigins.push(process.env.CLIENT_URL);
+}
+
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        if (
+            origin.startsWith("http://localhost:") ||
+            origin.endsWith(".vercel.app") ||
+            allowedOrigins.includes(origin)
+        ) {
+            return callback(null, true);
+        }
+        return callback(null, true);
+    },
+    credentials: true
+}))
 app.use(cookieParser())
 app.use(express.json())
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
