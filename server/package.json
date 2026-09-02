@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "node index.js",
+    "seed": "node seed.js",
     "test": "node --test"
   },
   "engines": {
